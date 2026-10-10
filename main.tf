@@ -227,7 +227,10 @@ resource "azurerm_api_management" "apim" {
   publisher_email      = "admin@poc.local"
   sku_name             = "Developer_1"
   virtual_network_type = "Internal"
-  virtual_network_id   = azurerm_subnet.snet_apim.id
+  
+  virtual_network_configuration {
+    subnet_id = azurerm_subnet.snet_apim.id
+  }
 
   identity {
     type = "SystemAssigned"
