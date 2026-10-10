@@ -331,13 +331,9 @@ subnet_id = azurerm_subnet.snet_appgw.id
   }
 }
 
-  ==============================================================================
-
-
-  11. AUTOMATED CONSOLE OUTPUT GENERATION
-
-
-  ==============================================================================
+# ==============================================================================
+# 11. AUTOMATED CONSOLE OUTPUT GENERATION
+# ==============================================================================
 
   output "application_gateway_url" {
     description = "The public endpoint URL used to safely access your secure backend topology."
