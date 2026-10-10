@@ -1,16 +1,41 @@
-name: 'Deploy Azure PoC Infrastructure'
+name: 'Controlled Azure PoC Deployment'
 
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch:
+  workflow_dispatch: # Allows you to also trigger this manually from the UI
 
 permissions:
   contents: read
 
 jobs:
-  terraform-deploy:
+  terraform-plan:
+    name: '1. Preview Changes (Plan)'
     runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Authenticate to Azure
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Plan
+      run: terraform plan
+
+  terraform-apply:
+    name: '2. Managed Execution (Apply)'
+    needs: terraform-plan
+    runs-on: ubuntu-latest
+    environment: production # ◄ This triggers the mandatory approval screen in GitHub
+    
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v4
