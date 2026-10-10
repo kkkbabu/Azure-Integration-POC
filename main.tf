@@ -329,7 +329,7 @@ subnet_id = azurerm_subnet.snet_appgw.id
     rule_set_type    = "OWASP"
     rule_set_version = "3.2"
   }
-
+}
 
   ==============================================================================
 
